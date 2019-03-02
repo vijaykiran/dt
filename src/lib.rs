@@ -15,13 +15,10 @@ pub fn init(project_name: &str) {
 name: '{}'
 version: '1.0'
 
-# This setting configures which "profile" dbt uses for this project. Profiles contain
-# database connection information, and should be configured in the  ~/.dbt/profiles.yml file
-profile: 'default'
-
-# These configurations specify where dbt should look for different types of files.
-# The `source-paths` config, for example, states that source models can be found
-# in the "models/" directory. You probably won't need to change these!
+# These configurations specify where dt should look for different types
+# of files. The `source-paths` config, for example, states that source
+# models can be found  in the "models/" directory.
+# You probably won't need to change these!
 source-paths: ["models"]
 analysis-paths: ["analysis"]
 test-paths: ["tests"]
@@ -29,14 +26,14 @@ data-paths: ["data"]
 macro-paths: ["macros"]
 
 target-path: "target"  # directory which will store compiled SQL files
-clean-targets:         # directories to be removed by `dbt clean`
+clean-targets:         # directories to be removed by `dt clean`
     - "target"
 
 # You can define configurations for models in the `source-paths` directory here.
 # Using these configurations, you can enable or disable models, change how they
 # are materialized, and more!
 
-# In this example config, we tell dbt to build all models in the example/ directory
+# In this example config, we tell dt to build all models in the example/ directory
 # as views (the default). These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 models:
