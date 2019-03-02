@@ -1,0 +1,21 @@
+name: dt - data transmogrifier
+version: "0.0.1"
+author: Vijay Kiran. <mail@vijaykiran.com>
+args:
+  - verbose:
+      short: v
+      multiple: true
+      help: Sets the level of verbosity
+
+subcommands:
+  - init:
+      about: Create a new DT project
+      args:
+        - project_name:
+            help: The name of the folder that is used to create the project
+            index: 1
+            required: true
+
+  - compile:
+      about: Generates executable SQL from source model, test, and analysis files.
+        Compiled SQL files are written to the target/directory.
