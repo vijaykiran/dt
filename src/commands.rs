@@ -1,9 +1,7 @@
-#[macro_use]
-extern crate log;
-
 use std::fs;
 use std::path::Path;
 
+//TODO Change the return type to Result<(), String>
 pub fn init(project_name: &str) {
     let folders = vec!["data", "logs", "macros", "models", "target", "tests"];
 
@@ -72,10 +70,4 @@ pub fn clean() -> Result<(), String> {
     } else {
         Ok(())
     }
-}
-
-//Tests, ahoy!
-#[cfg(test)]
-mod tests {
-    use super::*;
 }

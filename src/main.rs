@@ -1,8 +1,8 @@
 extern crate chrono;
 #[macro_use]
 extern crate clap;
-extern crate dt;
 extern crate env_logger;
+#[macro_use]
 extern crate log;
 
 use std::io::Write;
@@ -12,7 +12,9 @@ use clap::App;
 use env_logger::Builder;
 use log::LevelFilter;
 
-use dt::{clean, init};
+use commands::{clean, init};
+
+mod commands;
 
 fn main() {
     Builder::new()
@@ -33,11 +35,10 @@ fn main() {
 
     if let Some(matches) = matches.subcommand_matches("init") {
         let project_name = matches.value_of("project_name").unwrap();
-        init(project_name);
+        init(project_name)
     }
 
     if matches.subcommand_matches("clean").is_some() {
-        //TODO Print the error from clean
         if let Err(error) = clean() {
             eprintln!("{}", error)
         }
