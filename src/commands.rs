@@ -1,8 +1,7 @@
 use std::fs;
 use std::path::Path;
 
-//TODO Change the return type to Result<(), String>
-pub fn init(project_name: &str) {
+pub fn init(project_name: &str) -> Result<(), String> {
     let folders = vec!["data", "logs", "macros", "models", "target", "tests"];
 
     let template = format!(
@@ -46,20 +45,28 @@ models:
         project_name, project_name
     );
 
-    let paths = folders
-        .into_iter()
-        .map(|f: &str| format!("./{}/{}", project_name, f));
+    if !Path::new(project_name).exists() {
+        let paths = folders
+            .into_iter()
+            .map(|f: &str| format!("./{}/{}", project_name, f));
 
-    info!("Creating project {} ...", project_name);
+        info!("Creating project {} ...", project_name);
 
-    // https://doc.rust-lang.org/rust-by-example/error/iter_result.html
-    let (_, failures): (Vec<_>, Vec<_>) = paths.map(fs::create_dir_all).partition(Result::is_ok);
+        // https://doc.rust-lang.org/rust-by-example/error/iter_result.html
+        let (_, failures): (Vec<_>, Vec<_>) =
+            paths.map(fs::create_dir_all).partition(Result::is_ok);
 
-    if !failures.is_empty() {
-        error!("Unable to create folders {:#?}", failures);
+        if !failures.is_empty() {
+            error!("Unable to create folders {:#?}", failures);
+        }
+        fs::write(format!("{}/dt_project.yml", project_name), template)
+            .map_err(|err| err.to_string())
+    } else {
+        Err(format!(
+            "A file or folder with name '{}' already exists, please choose another name",
+            project_name
+        ))
     }
-    let result = fs::write(format!("{}/dt_project.yml", project_name), template);
-    result.expect("Unable to write file");
 }
 
 pub fn clean() -> Result<(), String> {

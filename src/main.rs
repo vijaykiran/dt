@@ -1,7 +1,10 @@
 extern crate dt;
+
 use dt::{handle_commands, setup_logging};
 
 fn main() {
     setup_logging();
-    handle_commands();
+    if let Err(msg) = handle_commands() {
+        eprintln!("Error: {}", msg)
+    }
 }

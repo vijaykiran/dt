@@ -31,18 +31,16 @@ pub fn setup_logging() {
         .init();
 }
 
-pub fn handle_commands() {
+pub fn handle_commands() -> Result<(), String> {
     let yaml = load_yaml!("../config/dt.yml");
     let matches = App::from_yaml(yaml).get_matches();
 
     if let Some(matches) = matches.subcommand_matches("init") {
         let project_name = matches.value_of("project_name").unwrap();
         init(project_name)
-    }
-
-    if matches.subcommand_matches("clean").is_some() {
-        if let Err(error) = clean() {
-            eprintln!("{}", error)
-        }
+    } else if matches.subcommand_matches("clean").is_some() {
+        clean()
+    } else {
+        Ok(())
     }
 }
