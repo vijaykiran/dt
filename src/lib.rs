@@ -5,7 +5,7 @@ use std::fs;
 use std::path::Path;
 
 pub fn init(project_name: &str) {
-    let folders = vec!["models", "tests", "data", "macros", "target", "logs"];
+    let folders = vec!["data", "logs", "macros", "models", "target", "tests"];
 
     let template = format!(
         r#"
