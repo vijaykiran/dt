@@ -12,7 +12,7 @@ use clap::App;
 use env_logger::Builder;
 use log::LevelFilter;
 
-use dt::init;
+use dt::{clean, init};
 
 fn main() {
     Builder::new()
@@ -33,6 +33,13 @@ fn main() {
 
     if let Some(matches) = matches.subcommand_matches("init") {
         let project_name = matches.value_of("project_name").unwrap();
-        init(project_name)
+        init(project_name);
+    }
+
+    if matches.subcommand_matches("clean").is_some() {
+        //TODO Print the error from clean
+        if let Err(error) = clean() {
+            eprintln!("{}", error)
+        }
     }
 }
